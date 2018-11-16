@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="./css/style.css">
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -24,7 +27,7 @@
                                 <input id="newTask" type="text" class="validate">
                                 <label for="newTask">Nova tarefa</label>
                             </div>
-                            <a class="waves-effect waves-light btn-small">ADICIONAR TAREFA</a>
+                            <a id="add" class="waves-effect waves-light btn-small">ADICIONAR TAREFA</a>
                         </form>
 
                         <br>
@@ -38,45 +41,99 @@
                         </form>
 
                         <table>
-                            <tbody>
-                                <tr>
-                                    <td>Estudar para a prova de web</td>
-                                    <td><a href=""><i class="material-icons">close</i></a></td>
-                                </tr>
-                                <tr>
-                                        <td>Estudar para a prova de web</td>
-                                        <td><a href=""><i class="material-icons">close</i></a></td>
-                                    </tr>
+                            <tbody id="tableTask">
+
+
                             </tbody>
                         </table>
 
                         <br>
 
-                        <a class="waves-effect waves-light grey darken-4 btn-small">Limpar Lista de Tarefas</a>
+                        <a id="removeAll" class="waves-effect waves-light grey darken-4 btn-small">Limpar Lista de
+                            Tarefas</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    
+
 
     <script src="./js/app/services/TaskService.js"></script>
+    <script src="./js/app/controllers/TaskController.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 
 
     <script>
+        var task = new TaskService();
+        console.log(task.all() + "ff");
 
-    
-            var task = new TaskService();
-            task.add('Tonu');
-            console.log(task.all() + "ff");
-    
 
-            
-        </script>
+        $("#add").click(function () {
+            let taskValue = $("#newTask");
+            task.add(taskValue.val());
+            taskValue.val('');
+            alert("Item Adicionado!");
+            location.reload();
+        });
 
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+        $("#removeAll").click(function () {
+            alert("Todas as tarefas foram removidas");
+            task.clear();
+            location.reload();
+        });
+
+        var items = task.all();
+        var tableTask = $("#tableTask");
+        $(function () {
+            var tr = ``;
+
+            var items = [];
+            var keys = Object.keys(localStorage);
+            var size = keys.length;
+            while (size--) {
+                items.push(localStorage.getItem(keys[size]));
+                console.log(localStorage.getItem(keys[size]));
+                tr += `<tr>
+                                    <td>${localStorage.getItem(keys[size])}</td>
+                                    <td><a onclick='remove(${keys[size]})'><i class="material-icons">close</i></a></td>
+                                </tr>
+                                `;
+            }
+            tableTask.append(tr);
+        });
+
+        function remove(id) {
+            task.delete(`${id}`);
+            console.log(id);
+            alert("Item removido");
+            location.reload();
+        }
+
+
+
+        $("#filtertasks").keyup(function () {
+            console.log("fdsf")
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("filtertasks");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tableTask");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        });
+
+    </script>
+
 </body>
 
 </html>

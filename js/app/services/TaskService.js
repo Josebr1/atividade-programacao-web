@@ -16,7 +16,7 @@ class TaskService {
 
     add(task) {
         console.log("task");
-        localStorage.setItem(localStorage.length + 1, task);
+        localStorage.setItem(localStorage.length +1 , task);
     }
 
     delete(id) {
