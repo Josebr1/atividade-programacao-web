@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="./css/style.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col s6">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Lista de Tarefas</span>
+                        <br>
+                        <form>
+                            <div class="input-field">
+                                <input id="newTask" type="text" class="validate">
+                                <label for="newTask">Nova tarefa</label>
+                            </div>
+                            <a class="waves-effect waves-light btn-small">ADICIONAR TAREFA</a>
+                        </form>
+
+                        <br>
+
+                        <form>
+                            <h5>Tarefas</h5>
+                            <div class="input-field">
+                                <input id="filtertasks" type="text" class="validate">
+                                <label for="filtertasks">Filtrar tarefas</label>
+                            </div>
+                        </form>
+
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Estudar para a prova de web</td>
+                                    <td><a href=""><i class="material-icons">close</i></a></td>
+                                </tr>
+                                <tr>
+                                        <td>Estudar para a prova de web</td>
+                                        <td><a href=""><i class="material-icons">close</i></a></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+
+                        <a class="waves-effect waves-light grey darken-4 btn-small">Limpar Lista de Tarefas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script src="./js/app/services/TaskService.js"></script>
+
+
+    <script>
+
+    
+            var task = new TaskService();
+            task.add('Tonu');
+            console.log(task.all() + "ff");
+    
+
+            
+        </script>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+
+</html>
